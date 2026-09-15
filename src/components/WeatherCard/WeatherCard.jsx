@@ -3,7 +3,6 @@ import clear from "../../assets/day/clear-day.svg";
 import { weatherOptions } from "../../utils/constants";
 
 function WeatherCard({ weatherData }) {
-  // FIXME: Weather cards do not show up!
   // const filteredOptions = weatherOptions.filter((option) => {
   //   return (
   //     option.day === weatherData.isDay &&

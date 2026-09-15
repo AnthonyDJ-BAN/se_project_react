@@ -15,6 +15,8 @@ function App() {
     temp: { F: 999 },
     city: "",
   });
+
+  const [clothingItems, setClothingItems] = useState([]);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
 
@@ -60,11 +62,16 @@ function App() {
     <div className="page">
       <div className="page__content">
         <Header handleAddBtn={handleAddBtn} weatherData={weatherData} />
-        <Main weatherData={weatherData} handleCard={handleCard} />
+        <Main
+          weatherData={weatherData}
+          handleCard={handleCard}
+          cards={clothingItems}
+        />
         <Footer />
       </div>
       <ModalWithForm
         title="New garment"
+        name="new-card"
         buttonText="Add garment"
         isOpen={activeModal === "add-garment"}
         handleClose={closeActiveModal}
