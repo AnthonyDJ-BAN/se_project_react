@@ -12,9 +12,15 @@ export const getWeather = ({ latitude, longitude }, APIkey) => {
 export const filterWeatherData = (data) => {
   const result = {};
   result.city = data.name;
-  result.temp = { F: data.main.temp };
+  result.temp = {
+    F: Math.round(data.main.temp),
+    C: Math.round(((data.main.temp - 32) * 5) / 9),
+  };
   result.type = getWeatherType(result.temp.F);
-  result.condition = data.weather[0].main.toLowerCase();
+
+  const mainCondition = data.weather[0].main.toLowerCase();
+  result.condition = getWeatherCondition(mainCondition);
+
   result.isDay = isDay(data.sys, Date.now());
 
   return result;
@@ -32,4 +38,15 @@ const getWeatherType = (temperature) => {
   } else {
     return "cold";
   }
+};
+
+const getWeatherCondition = (condition) => {
+  if (condition === "clouds") return "cloudy";
+  if (condition === "clear") return "clear";
+  if (condition === "rain" || condition === "drizzle") return "rainy";
+  if (condition === "snow") return "snowy";
+  if (condition === "thunderstorm") return "stormy";
+  if (["fog", "mist", "haze", "smoke"].includes(condition)) return "foggy";
+
+  return condition;
 };
