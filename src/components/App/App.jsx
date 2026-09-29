@@ -78,10 +78,12 @@ function App() {
   }, [activeModal]);
 
   useEffect(() => {
-    getWeather(coordinates, APIkey).then((data) => {
-      const filteredData = filterWeatherData(data);
-      setWeatherData(filteredData);
-    });
+    getWeather(coordinates, APIkey)
+      .then((data) => {
+        const filteredData = filterWeatherData(data);
+        setWeatherData(filteredData);
+      })
+      .catch(console.error);
 
     getItems()
       .then((data) => {
@@ -91,13 +93,11 @@ function App() {
   }, []);
 
   const handleCardDelete = (card) => {
-    const id = card._id || card.id;
+    const id = card._id;
 
     removeItem(id)
       .then(() => {
-        setClothingItems((items) =>
-          items.filter((item) => (item._id || item.id) !== id),
-        );
+        setClothingItems((items) => items.filter((item) => item._id !== id));
         closeActiveModal();
       })
       .catch(console.error);
